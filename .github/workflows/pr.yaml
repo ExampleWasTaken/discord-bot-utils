@@ -20,7 +20,7 @@ jobs:
             - name: eslint version
               run: npx eslint -v
             - name: Check Lint
-              run: npm run lint -- --debug --max-warning=0
+              run: npm run lint -- --debug --max-warnings=0
     build:
         runs-on: ubuntu-latest
         steps:
