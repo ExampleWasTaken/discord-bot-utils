@@ -17,6 +17,8 @@ jobs:
               uses: actions/checkout@v3
             - name: install
               run: npm ci
+            - name: List dir
+              run: ls
             - name: Check Lint
               run: npm run lint
     build:
