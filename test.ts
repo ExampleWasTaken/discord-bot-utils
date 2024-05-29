@@ -5,7 +5,7 @@ class Super {
         this.memberA = name;
     }
 
-    getMemberA(): string {
+    get memberA(): string {
         return this.memberA;
     }
 
@@ -13,7 +13,7 @@ class Super {
         this.memberA = value;
     }
 
-    toString(): string {
-        return this.memberA.toString();
+    toString(args: any): string {
+        return this.memberA.toString(args);
     }
 }
