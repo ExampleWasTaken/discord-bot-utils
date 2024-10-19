@@ -9,10 +9,10 @@ const noConnEmbed = makeEmbed({
   color: Colors.Red,
 });
 
-const failedTimeoutEmbed = (discordUser: User, error: any) =>
+const failedTimeoutEmbed = (discordUser: User, error: Error) =>
   makeEmbed({
     title: 'Timeout - Failed',
-    description: makeLines([`Failed to timeout ${discordUser.toString()}`, '', error]),
+    description: makeLines([`Failed to timeout ${discordUser.toString()}`, '', error.message]),
     color: Colors.Red,
   });
 
@@ -72,7 +72,7 @@ const modLogEmbed = (
       },
       {
         name: 'Moderator',
-        value: `${moderator}`,
+        value: `${moderator.toString()}`,
       },
       {
         name: 'Reason',
@@ -135,7 +135,9 @@ export async function handleTimeoutInfraction(interaction: ChatInputCommandInter
   try {
     await discordUser.timeout(timeoutDuration, timeoutReason);
   } catch (error) {
-    await interaction.editReply({ embeds: [failedTimeoutEmbed(discordUser.user, error)] });
+    if (error instanceof Error) {
+      await interaction.editReply({ embeds: [failedTimeoutEmbed(discordUser.user, error)] });
+    }
     Logger.error(error);
     return;
   }

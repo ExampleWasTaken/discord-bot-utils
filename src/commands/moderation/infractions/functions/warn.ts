@@ -16,7 +16,7 @@ const warnFailed = (discordUser: User) =>
     color: Colors.Red,
   });
 
-const dmEmbed = (guild: Guild, formattedDate: any, moderator: User, reason: string) =>
+const dmEmbed = (guild: Guild, formattedDate: string, moderator: User, reason: string) =>
   makeEmbed({
     title: `You have been warned in ${guild.name}`,
     fields: [
@@ -45,7 +45,7 @@ const noDM = (discordUser: User) =>
     color: Colors.Red,
   });
 
-const modLogEmbed = (formattedDate: any, moderator: User, discordUser: User, reason: string) =>
+const modLogEmbed = (formattedDate: string, moderator: User, discordUser: User, reason: string) =>
   makeEmbed({
     author: {
       name: `[WARNED]  ${discordUser.tag}`,

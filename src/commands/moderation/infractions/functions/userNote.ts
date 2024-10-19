@@ -15,7 +15,7 @@ const noteFailed = makeEmbed({
   color: Colors.Red,
 });
 
-const modLogEmbed = (formattedDate: any, moderator: User, discordUser: User, note: string) =>
+const modLogEmbed = (formattedDate: string, moderator: User, discordUser: User, note: string) =>
   makeEmbed({
     author: {
       name: `[NOTE]  ${discordUser.tag}`,

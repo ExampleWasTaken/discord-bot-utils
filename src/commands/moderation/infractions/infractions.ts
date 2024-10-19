@@ -197,10 +197,11 @@ export default slashCommand(data, async ({ interaction }) => {
   const subcommandName = interaction.options.getSubcommand();
 
   switch (subcommandName) {
-    case 'list':
+    case 'list': {
       const userID = interaction.options.getUser('tag_or_id')?.id;
       await handleListInfraction(interaction, userID, false);
       break;
+    }
     case 'delete':
       await handleDeleteInfraction(interaction);
       break;

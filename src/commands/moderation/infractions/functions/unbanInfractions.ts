@@ -32,7 +32,7 @@ const modLogEmbed = (moderator: User, userID: string, banReason: string, formatt
       },
       {
         name: 'Moderator',
-        value: `${moderator}`,
+        value: `${moderator.toString()}`,
       },
       {
         name: 'Reason',
