@@ -98,12 +98,12 @@ export default slashCommand(data, async ({ interaction }) => {
         } catch (e) {
           Logger.error('An error occurred while trying to send the mod log:', e);
         }
-        setTimeout(async () => {
+        setTimeout(() => {
           try {
-            return interaction.deleteReply();
+            void interaction.deleteReply();
           } catch (error) {
             Logger.error('Failed to delete the reply message:', error);
-            return interaction.editReply({ content: 'Failed to delete the reply message.' });
+            void interaction.editReply({ content: 'Failed to delete the reply message.' });
           }
         }, 5000);
         return interaction.editReply({ content: '', embeds: [replyEmbed], components: [] });
@@ -121,7 +121,7 @@ export default slashCommand(data, async ({ interaction }) => {
 
       return interaction.editReply({ embeds: [canceledEmbed], components: [] });
     }
-  } catch (e) {
+  } catch {
     return interaction.editReply({ content: 'The command timed out.', components: [] });
   }
 });
