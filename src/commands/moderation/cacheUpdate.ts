@@ -1,5 +1,12 @@
-import { ApplicationCommandOptionType, ApplicationCommandType, Colors, EmbedField, TextChannel } from 'discord.js';
-import { constantsConfig, slashCommand, slashCommandStructure, makeEmbed } from '../../lib';
+import {
+  APIEmbedField,
+  ApplicationCommandOptionType,
+  ApplicationCommandType,
+  Colors,
+  EmbedField,
+  TextChannel,
+} from 'discord.js';
+import { constantsConfig, makeEmbed, slashCommand, slashCommandStructure } from '../../lib';
 
 const data = slashCommandStructure({
   name: 'cache-update',
@@ -31,7 +38,7 @@ const data = slashCommandStructure({
   ],
 });
 
-const cacheUpdateEmbed = (action: string, fields: any, color: number) =>
+const cacheUpdateEmbed = (action: string, fields: APIEmbedField[], color: number) =>
   makeEmbed({
     title: `Cache Update - ${action}`,
     fields,
@@ -131,7 +138,7 @@ export default slashCommand(data, async ({ interaction }) => {
           ),
         ],
       });
-    } catch (error) {
+    } catch {
       await interaction.followUp({ embeds: [noChannelEmbed(interaction.options.getSubcommand(), 'mod-log')] });
     }
   }
