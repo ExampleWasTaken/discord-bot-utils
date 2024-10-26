@@ -33,7 +33,7 @@ export default slashCommand(data, async ({ interaction }) => {
           response =
             process.env.NODE_ENV === 'production'
               ? `Deployed ${commandArray.length} commands and ${contextArray.length} contexts globally as ${bot}!`
-              : `Deployed ${commandArray.length} commands and ${contextArray.length} contexts to \`${guildName}\` as ${bot}!`;
+              : `Deployed ${commandArray.length} commands and ${contextArray.length} contexts to \`${guildName.name}\` as ${bot}!`;
         } else {
           //If the bot can't gather the guild name, use the ID in the response
           response =
