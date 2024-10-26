@@ -1,4 +1,4 @@
-import { Colors, CommandInteraction } from 'discord.js';
+import { Colors, CommandInteraction, User } from 'discord.js';
 import moment from 'moment';
 import { getConn, Infraction, makeEmbed, createPaginatedInfractionEmbedHandler } from '../../../../lib';
 
@@ -78,20 +78,16 @@ export async function handleListInfraction(
       | typeof userNotes;
     /* eslint-enable @typescript-eslint/no-duplicate-type-constituents */
 
-    const fetchModerators = (infractions: InfractionArray) => {
-      const moderatorPromises = infractions.map((infraction) =>
-        interaction.client.users
-          .fetch(infraction.moderatorID!)
-          // Disabled for readability
-
-          .catch(() => {
-            return new Promise((resolve) => {
-              resolve(`I can't find the moderator, here is the stored ID: ${infraction.moderatorID}`);
-            });
-          }),
+    const fetchModerators = async (infractions: InfractionArray): Promise<(User | string)[]> => {
+      return Promise.all(
+        infractions.map(async (infraction) => {
+          try {
+            return await interaction.client.users.fetch(infraction.moderatorID!);
+          } catch {
+            return `I can't find the moderator, here is the stored ID: ${infraction.moderatorID}`;
+          }
+        }),
       );
-
-      return Promise.all(moderatorPromises);
     };
 
     // Warns
@@ -106,10 +102,10 @@ export async function handleListInfraction(
           name: `Warn #${i + 1}`,
           value:
             `**Type:** ${warnInfractions[i].infractionType}\n` +
-            `**Moderator:** ${warnModeratorUsers[i]}\n` +
+            `**Moderator:** ${warnModeratorUsers[i].toString()}\n` +
             `**Reason:** ${warnInfractions[i].reason}\n` +
             `**Date:** ${formattedDate}\n` +
-            `**Infraction ID:** ${warnInfractions[i].infractionID}`,
+            `**Infraction ID:** ${warnInfractions[i].infractionID?.toString() ?? 'n/a'}`,
         },
         {
           name: '',
@@ -140,11 +136,11 @@ export async function handleListInfraction(
           name: `Timeout #${i + 1}`,
           value:
             `**Type:** ${timeoutInfractions[i].infractionType}\n` +
-            `**Moderator:** ${timeoutModeratorUsers[i]}\n` +
+            `**Moderator:** ${timeoutModeratorUsers[i].toString()}\n` +
             `**Reason:** ${timeoutInfractions[i].reason}\n` +
             `**Duration:** ${timeoutInfractions[i].duration !== undefined ? timeoutInfractions[i].duration : 'No duration specified, this user was timed out before the bot upgrade!'}\n` +
             `**Date:** ${formattedDate}\n` +
-            `**Infraction ID:** ${timeoutInfractions[i].infractionID}`,
+            `**Infraction ID:** ${timeoutInfractions[i].infractionID?.toString() ?? 'n/a'}`,
         },
         {
           name: '',
@@ -175,10 +171,10 @@ export async function handleListInfraction(
           name: `Scam Log #${i + 1}`,
           value:
             `**Type:** ${scamLogInfractions[i].infractionType}\n` +
-            `**Moderator:** ${scamLogModerators[i]}\n` +
+            `**Moderator:** ${scamLogModerators[i].toString()}\n` +
             `**Message Content:** ${scamLogInfractions[i].reason}\n` +
             `**Date:** ${formattedDate}\n` +
-            `**Infraction ID:** ${scamLogInfractions[i].infractionID}`,
+            `**Infraction ID:** ${scamLogInfractions[i].infractionID?.toString() ?? 'n/a'}`,
         },
         {
           name: '',
@@ -209,10 +205,10 @@ export async function handleListInfraction(
           name: `Ban #${i + 1}`,
           value:
             `**Type:** ${banInfractions[i].infractionType}\n` +
-            `**Moderator:** ${banModerators[i]}\n` +
+            `**Moderator:** ${banModerators[i].toString()}\n` +
             `**Reason:** ${banInfractions[i].reason}\n` +
             `**Date:** ${formattedDate}\n` +
-            `**Infraction ID:** ${banInfractions[i].infractionID}`,
+            `**Infraction ID:** ${banInfractions[i].infractionID?.toString() ?? 'n/a'}`,
         },
         {
           name: '',
@@ -242,10 +238,10 @@ export async function handleListInfraction(
           name: `Unban #${i + 1}`,
           value:
             `**Type:** ${unbanInfractions[i].infractionType}\n` +
-            `**Moderator:** ${unbanModerators[i]}\n` +
+            `**Moderator:** ${unbanModerators[i].toString()}\n` +
             `**Reason:** ${unbanInfractions[i].reason}\n` +
             `**Date:** ${formattedDate}\n` +
-            `**Infraction ID:** ${unbanInfractions[i].infractionID}`,
+            `**Infraction ID:** ${unbanInfractions[i].infractionID?.toString() ?? 'n/a'}`,
         },
         {
           name: '',
@@ -276,10 +272,10 @@ export async function handleListInfraction(
           name: `Note #${i + 1}`,
           value:
             `**Type:** ${userNotes[i].infractionType}\n` +
-            `**Moderator:** ${userNodeModerators[i]}\n` +
+            `**Moderator:** ${userNodeModerators[i].toString()}\n` +
             `**Note:** ${userNotes[i].reason}\n` +
             `**Date:** ${formattedDate}\n` +
-            `**Infraction ID:** ${userNotes[i].infractionID}`,
+            `**Infraction ID:** ${userNotes[i].infractionID?.toString() ?? 'n/a'}`,
         },
         {
           name: '',
@@ -355,9 +351,8 @@ export async function handleListInfraction(
     await interaction.deferReply({ ephemeral });
 
     await createPaginatedInfractionEmbedHandler(interaction, interaction.user.id, embeds, infractionsLengths);
-  } catch (error) {
+  } catch {
     //Error handling - User is no longer on discord (Or ID doesn't exist)
-
     const userNotFound = makeEmbed({
       color: Colors.Red,
       title: 'User not found',
