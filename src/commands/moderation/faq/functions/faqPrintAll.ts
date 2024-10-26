@@ -56,6 +56,8 @@ export async function handlePrintAllFAQ(interaction: ChatInputCommandInteraction
           })),
         });
 
+        // This is intended to be sequential
+        // eslint-disable-next-line no-await-in-loop
         await interaction.channel.send({ embeds: [faqEmbed] });
       }
 

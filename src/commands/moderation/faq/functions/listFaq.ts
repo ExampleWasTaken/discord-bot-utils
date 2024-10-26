@@ -23,18 +23,15 @@ export async function handleListFaq(interaction: ChatInputCommandInteraction<'ca
     let faqsAddedToPage = 0;
     const faqFields: { name: string; value: string }[] = [];
 
-    const moderatorPromises = faqs.map((currentFaq) =>
-      interaction.client.users
-        .fetch(currentFaq.moderatorID!)
-        // Added for better readability
-
-        .catch(() => {
-          return new Promise((resolve) => {
-            resolve(`I can't find the moderator, here is the stored ID: ${currentFaq.moderatorID}`);
-          });
-        }),
+    const moderatorUsers = await Promise.all(
+      faqs.map(async (currentFaq) => {
+        try {
+          return await interaction.client.users.fetch(currentFaq.moderatorID!);
+        } catch {
+          return `I can't find the moderator, here is the stored ID: ${currentFaq.moderatorID}`;
+        }
+      }),
     );
-    const moderatorUsers = await Promise.all(moderatorPromises);
 
     for (let i = 0; i < faqs.length; i++) {
       const formattedDate = moment(faqs[i].dateSet).utcOffset(0).format();
@@ -44,7 +41,7 @@ export async function handleListFaq(interaction: ChatInputCommandInteraction<'ca
           name: `**Title:** ${faqs[i].faqTitle}`,
           value:
             `**Answer:** ${faqs[i].faqAnswer}\n` +
-            `**Moderator:** ${moderatorUsers[i]}\n` +
+            `**Moderator:** ${moderatorUsers[i].toString()}\n` +
             `**Date Set:** ${formattedDate}\n` +
             `**FAQ ID:** ${faqs[i].id}\n`,
         },

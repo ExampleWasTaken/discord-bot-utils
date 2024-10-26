@@ -3,6 +3,7 @@ import {
   ChatInputCommandInteraction,
   Colors,
   ModalBuilder,
+  ModalSubmitInteraction,
   TextChannel,
   TextInputBuilder,
   TextInputStyle,
@@ -64,8 +65,8 @@ export async function handleAddFaq(interaction: ChatInputCommandInteraction<'cac
 
   //Modal sent
 
-  const filter = (interaction: { customId: string; user: { id: any } }) =>
-    interaction.customId === 'faqAddModal' && interaction.user.id;
+  const filter = (interaction: ModalSubmitInteraction) =>
+    !!interaction.user.id && interaction.customId === 'faqAddModal';
 
   try {
     //Await a modal response
