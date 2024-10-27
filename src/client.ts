@@ -45,5 +45,9 @@ const handleTermination = async () => {
   }
 };
 
+// FIXME: this entire behavior seems to be not working as expected. "Cleanup complete. Exiting..." is not logged to the console. The process seems to exit prematurely.
+// This is probably caused by the process not waiting for the promises but it requires a deeper investigation.
+/* eslint-disable @typescript-eslint/no-misused-promises */
 process.on('SIGINT', handleTermination);
 process.on('SIGTERM', handleTermination);
+/* eslint-enable @typescript-eslint/no-misused-promises */
