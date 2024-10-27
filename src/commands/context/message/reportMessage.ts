@@ -7,6 +7,8 @@ import {
   TextInputBuilder,
   TextInputStyle,
   Colors,
+  Message,
+  ModalSubmitInteraction,
 } from 'discord.js';
 import moment from 'moment/moment';
 import { constantsConfig, contextMenuCommand, contextMenuCommandStructure, Logger, makeEmbed } from '../../../lib';
@@ -17,7 +19,7 @@ const data = contextMenuCommandStructure({
 });
 
 const reportedMessageEmbed = (
-  targetMessage: any,
+  targetMessage: Message,
   interaction: ContextMenuCommandInteraction<'cached'>,
   messageContent: string,
   commentContent: string,
@@ -132,8 +134,8 @@ export default contextMenuCommand(data, async ({ interaction }) => {
 
   //Modal sent
 
-  const filter = (interaction: { customId: string; user: { id: any } }) =>
-    interaction.customId === 'reportMessageModal' && interaction.user.id;
+  const filter = (interaction: ModalSubmitInteraction) =>
+    !!interaction.user.id && interaction.customId === 'reportMessageModal';
 
   let commentContent = 'No additional comments provided.';
 
@@ -245,7 +247,7 @@ export default contextMenuCommand(data, async ({ interaction }) => {
     }
 
     await interaction.followUp({
-      content: `Would you like to share this report in ${modAlertsChannel}? If you do not respond in 15 seconds, I will assume you do not want to share this report.`,
+      content: `Would you like to share this report in ${modAlertsChannel.toString()}? If you do not respond in 15 seconds, I will assume you do not want to share this report.`,
       components: [
         {
           type: 1,
@@ -276,7 +278,7 @@ export default contextMenuCommand(data, async ({ interaction }) => {
 
       const sharedReportEmbed = makeEmbed({
         title: '[REPORTED MESSAGE]',
-        description: `A message has been reported in ${interaction.channel}.`,
+        description: `A message has been reported in ${interaction.channel.toString()}.`,
         fields: [
           {
             name: 'Link to Message',
@@ -292,24 +294,24 @@ export default contextMenuCommand(data, async ({ interaction }) => {
       if (shareReportButtonInteraction.customId === 'shareReportYes') {
         await modAlertsChannel.send({ embeds: [sharedReportEmbed] });
         await shareReportButtonInteraction.reply({
-          content: `Your report has been submitted and shared in ${modAlertsChannel}.`,
+          content: `Your report has been submitted and shared in ${modAlertsChannel.toString()}.`,
           ephemeral: true,
         });
         await scamReportLogs.send({
-          content: `Reported message from ${interaction.user.toString()} has been shared in ${modAlertsChannel}.`,
+          content: `Reported message from ${interaction.user.toString()} has been shared in ${modAlertsChannel.toString()}.`,
         });
       }
 
       if (shareReportButtonInteraction.customId === 'shareReportNo') {
         await shareReportButtonInteraction.reply({
-          content: `Your report has been submitted without sharing in ${modAlertsChannel}.`,
+          content: `Your report has been submitted without sharing in ${modAlertsChannel.toString()}.`,
           ephemeral: true,
         });
       }
     } catch (error) {
       Logger.error(error);
       await interaction.followUp({
-        content: `Your report has been submitted without sharing in ${modAlertsChannel}.`,
+        content: `Your report has been submitted without sharing in ${modAlertsChannel.toString()}.`,
         ephemeral: true,
       });
     }
