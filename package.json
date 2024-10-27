@@ -9,12 +9,10 @@
         "dev": "nodemon --config nodemon.json src/index.ts",
         "build": "tsc",
         "build:digitalocean": "npm ci --include=dev && npm run build",
-        "lint": "eslint --quiet",
+        "lint": "eslint",
         "lint-fix": "eslint --fix",
         "prettier:check": "prettier . --check",
-        "prettier:write": "prettier . --write",
-        "dtest": "tsc --noEmit && eslint & npm run prettier:check",
-        "test": "tsc --noEmit"
+        "prettier:write": "prettier . --write"
     },
     "author": "FlyByWire Simulations",
     "license": "AGPL-3.0",
