@@ -68,19 +68,19 @@ These commands are not hard coded in the bot, and instead they are configured th
 Additionally, there's a set of features that make these commands very flexible in use:
 
 - **Categories**
-    Commands are categorized for identifying the purpose or use of the command. Categories are manage dynamically through `/`-commands and stored in MongoDB.
+  Commands are categorized for identifying the purpose or use of the command. Categories are manage dynamically through `/`-commands and stored in MongoDB.
 
 - **Versions**
-    The content of commands are defined per Version. A version can be used to provide different content based on the context in which the command is executed. By default, there is a hard-coded `GENERIC` version available, more can be added and managed dynamically through `/`-commands and stored in MongoDB. If multiple versions exist, and no version is specified during the execution, the `GENERIC` version is shown, with buttons to select the version to be shown.
+  The content of commands are defined per Version. A version can be used to provide different content based on the context in which the command is executed. By default, there is a hard-coded `GENERIC` version available, more can be added and managed dynamically through `/`-commands and stored in MongoDB. If multiple versions exist, and no version is specified during the execution, the `GENERIC` version is shown, with buttons to select the version to be shown.
 
 - **Content**
-    For each version, it is possible (but not a must) to set the content of a command. The content is static information that is managed with `/`-commands and stored in MongoDB. Depending on the version requested, the content is loaded and shown. Content contains a Title, Body and Image.
+  For each version, it is possible (but not a must) to set the content of a command. The content is static information that is managed with `/`-commands and stored in MongoDB. Depending on the version requested, the content is loaded and shown. Content contains a Title, Body and Image.
 
 - **Permissions**
-    Two types of permissions exist: Channel permissions and Role permissions. Using permissions it is possible to block or allow the use of a command in certain channels or by certain roles.
+  Two types of permissions exist: Channel permissions and Role permissions. Using permissions it is possible to block or allow the use of a command in certain channels or by certain roles.
 
 - **Channel Default Versions**
-    For every channel, a specific version can be set as the default. In this case, even if there are multiple versions, if the command is executed without a version specified, the version set as the default for that channel is shown.
+  For every channel, a specific version can be set as the default. In this case, even if there are multiple versions, if the command is executed without a version specified, the version set as the default for that channel is shown.
 
 ### Detailed Concepts
 
@@ -89,17 +89,17 @@ Additionally, there's a set of features that make these commands very flexible i
 Commands only contain the basic information that is needed to use them:
 
 - `name`
-    A command has a name, this is the main way to execute the command, in combination with the configured prefix. This is a required attribute.
+  A command has a name, this is the main way to execute the command, in combination with the configured prefix. This is a required attribute.
 - `category`
-    The category a command belongs to, a command can only belong to a single category. This is a required attribute.
+  The category a command belongs to, a command can only belong to a single category. This is a required attribute.
 - `description`
-    The description of commands gives a short and brief overview of what the command is used for. This is a required attribute.
+  The description of commands gives a short and brief overview of what the command is used for. This is a required attribute.
 - `aliases`
-    A comma separated list for aliases for this command, each alias can be used to call the command instead of the name of the command. This is an optional attribute. Default value is empty.
+  A comma separated list for aliases for this command, each alias can be used to call the command instead of the name of the command. This is an optional attribute. Default value is empty.
 - `is_embed`
-    A boolean attribute that identifies if the output should be posted as an Embed. If set to `False`, it will be shown as a regular text output, which is useful for simple image commands, or for simple links. This is an optional attribute. Default value is `False`.
+  A boolean attribute that identifies if the output should be posted as an Embed. If set to `False`, it will be shown as a regular text output, which is useful for simple image commands, or for simple links. This is an optional attribute. Default value is `False`.
 - `embed_color`
-    Embeds in Discord have a color to the left, which can be used to give it a special look. By setting this value, you can change the default `FBW_CYAN` to other special colors. Colors are defined in the Config JSON file. This is an optional attribute. Default value is `FBW_CYAN` (only value currently in the `production.json` config file).
+  Embeds in Discord have a color to the left, which can be used to give it a special look. By setting this value, you can change the default `FBW_CYAN` to other special colors. Colors are defined in the Config JSON file. This is an optional attribute. Default value is `FBW_CYAN` (only value currently in the `production.json` config file).
 
 Note that a Command does not contain any information about the content itself. This is because the content is specific per version and is described below.
 
@@ -108,13 +108,13 @@ Note that a Command does not contain any information about the content itself. T
 Content contains the actual information that is shown to the user when executing the command. Depending on the configuration of the command itself, this content will be displayed as an Embed or as standard text. The following attributes are available:
 
 - `version`
-    The version this content applies to, this is a reference to one of the existing versions in the bot. This is a required attribute.
+  The version this content applies to, this is a reference to one of the existing versions in the bot. This is a required attribute.
 - `title`
-    The title of the content, this will be shown as the title of the Embed, or as the first bold line of the text output in case the command is not an embed. This is a required attribute.
+  The title of the content, this will be shown as the title of the Embed, or as the first bold line of the text output in case the command is not an embed. This is a required attribute.
 - `content`
-    A markdown capable string that identifies the actual content of the specified version. It can be up to 2048 Unicode characters, including emojis. This is an optional attribute. The default value is an empty (`null`), in which case it will not be shown as part of the output.
+  A markdown capable string that identifies the actual content of the specified version. It can be up to 2048 Unicode characters, including emojis. This is an optional attribute. The default value is an empty (`null`), in which case it will not be shown as part of the output.
 - `image`
-    A URL that refers to an image that should be shown as part of the content if the command is an Embed. For text-style commands, the URL should be part of the content itself so Discord automatically loads it as a preview. This is an optional attribute. The default value is empty (`null`).
+  A URL that refers to an image that should be shown as part of the content if the command is an Embed. For text-style commands, the URL should be part of the content itself so Discord automatically loads it as a preview. This is an optional attribute. The default value is empty (`null`).
 
 The `image` behavior can be surprising, but is chosen because it is not possible to just 'add' a message to a text-style response, unless if it is uploaded, and the decision was made to not upload an image very time the command is executed. What can be done is use markdown to load the image using the link syntax. Discord will then automatically load it as a preview.
 
@@ -123,96 +123,96 @@ The `image` behavior can be surprising, but is chosen because it is not possible
 Categories are used to group commands together. This is mostly useful for when the help command is called to get the list of available commands for a specific category. It groups them together and makes it easy to identify. Categories have the following attributes:
 
 - `name`
-    The name as how it should be shown to the users and in any output. This is a required attribute.
+  The name as how it should be shown to the users and in any output. This is a required attribute.
 - `emoji`
-    An emoji to identify the category, this will be shown next to the category whenever shown. This is an optional attribute. The default value is empty (`null`), in which case it isn't shown.
+  An emoji to identify the category, this will be shown next to the category whenever shown. This is an optional attribute. The default value is empty (`null`), in which case it isn't shown.
 
 #### Version
 
 Versions are useful if you want the same command to have different contents based on the context in which it is executed. An example use for FlyByWire Simulations is to use it to have a single command that gives different output based on the product for which it is requested. Later the impact of Versions will be described more. Versions have the following attributes:
 
 - `name`
-    A name for the version, this is how the version is identified in the different commands on how to manage the content of commands. This is a required attribute.
+  A name for the version, this is how the version is identified in the different commands on how to manage the content of commands. This is a required attribute.
 - `emoji`
-    The emoji associated with the version. When a command is executed without any version context, a GENERIC content will be displayed that offers the user the choice to get the details for a specific version. It does so by showing the emojis as buttons for the user to select. This is a required attribute.
+  The emoji associated with the version. When a command is executed without any version context, a GENERIC content will be displayed that offers the user the choice to get the details for a specific version. It does so by showing the emojis as buttons for the user to select. This is a required attribute.
 - `alias`
-    This is a command alias for the version. By executing `<prefix><alias> <command>`, the user can get the content for a specific version directly, instead of going through the GENERIC content. This is a required attribute.
+  This is a command alias for the version. By executing `<prefix><alias> <command>`, the user can get the content for a specific version directly, instead of going through the GENERIC content. This is a required attribute.
 - `is_enabled`
-    A boolean attribute that can enable or disable a version. When this is set to `False`, the version will not be exposed to users. It will not show up in the selection of versions for the GENERIC content, and the alias will not work. This allows for versions and the content for those versions to be created ahead of enabling them. This is an optional attribute. The default value is `False`.
+  A boolean attribute that can enable or disable a version. When this is set to `False`, the version will not be exposed to users. It will not show up in the selection of versions for the GENERIC content, and the alias will not work. This allows for versions and the content for those versions to be created ahead of enabling them. This is an optional attribute. The default value is `False`.
 
 #### Version Behavior
 
 Users can execute commands in two different ways, and they each result in different behavior. Any time a non-GENERIC version is mentioned, it must be enabled. Disable versions will never show up:
 
 - `<prefix><command>`
-    This is the direct way of executing a command, depending on the available content, several things might happen:
+  This is the direct way of executing a command, depending on the available content, several things might happen:
   - If no Channel Default Version is configured for the channel in which the command is executed:
     - GENERIC version and one or more other versions have content:
-        The GENERIC content is shown and the user is given a choice underneath it with buttons containing the emjois of the other versions with content. When the user clicks on one of the buttons, the GENERIC content is removed and a new message is send with the content of the selected version.
+      The GENERIC content is shown and the user is given a choice underneath it with buttons containing the emjois of the other versions with content. When the user clicks on one of the buttons, the GENERIC content is removed and a new message is send with the content of the selected version.
     - Only GENERIC version has content:
-        The GENERIC content is shown, and the user is not given a choice of other versions, as there is no choice available.
+      The GENERIC content is shown, and the user is not given a choice of other versions, as there is no choice available.
     - No GENERIC content is set:
-        No response is given to the user:
+      No response is given to the user:
     - No content is set at all:
-        No response is given to the user.
+      No response is given to the user.
   - If a Channel Default Version is configured for the channel in which the command is executed:
     - Content is set for the Channel Default Version:
-        The content for that version is shown to the user directly.
+      The content for that version is shown to the user directly.
     - No content is set for the Channel Default Version, but it does exist for the GENERIC version:
-        The content for the GENERIC version is shown, but no selection buttons are shown.
+      The content for the GENERIC version is shown, but no selection buttons are shown.
     - No content is set for the Channel Default version, and no content exists for the GENERIC version:
-        No response is given to the user.
+      No response is given to the user.
     - No content is set at all:
-        No response is given to the user.
+      No response is given to the user.
 - `<prefix><version alias> <command>`
-    This directly requests the content for the specified version:
+  This directly requests the content for the specified version:
   - Content is set for the specified version:
-      The content for the specified version is shown to the user directly.
+    The content for the specified version is shown to the user directly.
   - No content is set for the specified version, GENERIC version and one or more other versions have content:
-      The GENERIC content is shown and the user is given a choice underneath it with buttons containing the emjois of the other versions with content. When the user clicks on one of the buttons, the GENERIC content is removed and a new message is send with the content of the selected version.
+    The GENERIC content is shown and the user is given a choice underneath it with buttons containing the emjois of the other versions with content. When the user clicks on one of the buttons, the GENERIC content is removed and a new message is send with the content of the selected version.
   - Content is not set for the specified version and only GENERIC version has content:
-      The GENERIC content is shown, and the user is not given a choice of other versions, as there is no choice available.
+    The GENERIC content is shown, and the user is not given a choice of other versions, as there is no choice available.
   - No content is set for the specified version and no GENERIC content is set:
-      No response is given to the user.
+    No response is given to the user.
   - No content is set at all:
-      No response is given to the user.
+    No response is given to the user.
 
 #### Channel Default Version
 
 It is possible to set a version as the default for a specific channel. By doing so, whenever someone executes the command directly (`<prefix><command>` in that channel, it will automatically default to that version and not first post the GENERIC version with choices. This bypasses the choice menu and allows for an optimized experience for users. Two attributes need to be provided during configuration:
 
 - `channel`
-    The Discord channel to which the version should be defaulted to. This is a required attribute.
+  The Discord channel to which the version should be defaulted to. This is a required attribute.
 - `version`
-    The version that should be the default for this channel. It is possible to select a disabled version for this, but if you do so and the command is executed in the channel, no output will be shown. This is a required attribute.
+  The version that should be the default for this channel. It is possible to select a disabled version for this, but if you do so and the command is executed in the channel, no output will be shown. This is a required attribute.
 
 #### Permission
 
 Permissions can be set on commands so there are limitations to who can use the command and/or in which channels they can be used. The permission behavior is described below. Permissions have the following attributes:
 
 - `roles`
-    A list of Discord roles that either have access or do not have access to the command. This is an optional attribute. The default is an empty list, which results in the roles of the user not being checked.
+  A list of Discord roles that either have access or do not have access to the command. This is an optional attribute. The default is an empty list, which results in the roles of the user not being checked.
 - `role-blocklist`
-    A boolean attribute that identifies if the list of roles is blocked from using the command (`True`) or allowed to use the command (`False`). This is an optional attribute. The default value is `False`, meaning that if a `roles` list is set, only users with at least one of those roles can execute the command.
+  A boolean attribute that identifies if the list of roles is blocked from using the command (`True`) or allowed to use the command (`False`). This is an optional attribute. The default value is `False`, meaning that if a `roles` list is set, only users with at least one of those roles can execute the command.
 - `channels`
-    A list of Disord channels in which the command can either be executed or not executed. This is an optional attirubute. The default is an empty list, which results in the channel not being checked.
+  A list of Disord channels in which the command can either be executed or not executed. This is an optional attirubute. The default is an empty list, which results in the channel not being checked.
 - `channel-blocklist`
-    A boolean attribute that identifies if the list of channels is blocked from command execution (`True`) or allowed to execute the command in (`False`). This is an optional attribute. The default value is `False`, meaning that if a `channels` list is set, the command is only allowed to be executed in one of those channels.
+  A boolean attribute that identifies if the list of channels is blocked from command execution (`True`) or allowed to execute the command in (`False`). This is an optional attribute. The default value is `False`, meaning that if a `channels` list is set, the command is only allowed to be executed in one of those channels.
 - `quiet-errors`
-    A boolean attribute, which if set to `True` will not display any warning to the user and will quietly fail the command execution if the permissions do not allow the execution of the command. This is an optional attribute. The default value is `False`.
+  A boolean attribute, which if set to `True` will not display any warning to the user and will quietly fail the command execution if the permissions do not allow the execution of the command. This is an optional attribute. The default value is `False`.
 - `verbose-errors`
-    A boolean attribute, which if set to `True` will show detailed output about the permission violated and who (role violation) or where (channel violation) the command can be executed. This is an optional attribute. The default value is `False`.
+  A boolean attribute, which if set to `True` will show detailed output about the permission violated and who (role violation) or where (channel violation) the command can be executed. This is an optional attribute. The default value is `False`.
 
 ##### Permission Behavior
 
 Permissions are checked in the following flow:
 
 - If there is a list of `roles` defined, the user is checked if they have any of the roles.
-  - If `role-blocklist` is `False` and the user *does not* have any of the roles, the execution of the command is blocked.
-  - If `role-blocklist` is `True` and the user *does* have any of the roles, the execution of the command is blocked.
+  - If `role-blocklist` is `False` and the user _does not_ have any of the roles, the execution of the command is blocked.
+  - If `role-blocklist` is `True` and the user _does_ have any of the roles, the execution of the command is blocked.
 - If there is a list of `channels` defined, the list is checked to see if the channel in which the command is executed, is part of the list.
-  - If `channel-blocklist` is `False` and the command *is not* executed in any of the channels, the execution of the command is blocked.
-  - If `channel-blocklist` is `True` and the command *is* executed in any of the channels, the execution of the command is blocked.
+  - If `channel-blocklist` is `False` and the command _is not_ executed in any of the channels, the execution of the command is blocked.
+  - If `channel-blocklist` is `True` and the command _is_ executed in any of the channels, the execution of the command is blocked.
 
 ##### Errors
 
@@ -231,14 +231,15 @@ If both are set to `True`, `quiet-errors` takes precedence.
 The bot will require a MongoDB environment set up. There are a few settings to configure:
 
 - **Config JSON**:
+
   - `prefixCommandPrefix`
-        A String that will be the prefix for command that will be used by the user to execute commands. For example `.` to execute commands like `.help`
+    A String that will be the prefix for command that will be used by the user to execute commands. For example `.` to execute commands like `.help`
   - `prefixCommandPermissionDelay`
-        A number in milliseconds that identifies the delay before the message about invalid permissions is deleted.
+    A number in milliseconds that identifies the delay before the message about invalid permissions is deleted.
 
 - **Environment Variable**:
   - `CACHE_REFRESH_INTERVAL`
-        A number in milliseconds that is used to automatically refresh the cache from the database, to make sure the cache remains up to date.
+    A number in milliseconds that is used to automatically refresh the cache from the database, to make sure the cache remains up to date.
 
 ### Management Capabilities
 
