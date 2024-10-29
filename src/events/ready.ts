@@ -1,6 +1,20 @@
 import { ActivityType, TextChannel } from 'discord.js';
 import moment from 'moment';
-import { constantsConfig, event, Events, connect, setupScheduler, Logger, imageBaseUrl, getScheduler } from '../lib';
+import {
+    constantsConfig,
+    event,
+    Events,
+    connect,
+    setupScheduler,
+    Logger,
+    imageBaseUrl,
+    getScheduler,
+    setupInMemoryCache,
+    loadAllPrefixCommandsToCache,
+    loadAllPrefixCommandVersionsToCache,
+    loadAllPrefixCommandCategoriesToCache,
+    loadAllPrefixCommandChannelDefaultVersionsToCache,
+} from '../lib';
 import { deployCommands } from '../scripts/deployCommands';
 import commandArray from '../commands';
 import contextArray from '../commands/context';
@@ -41,11 +55,23 @@ export default event(Events.ClientReady, async ({ log }, client) => {
     }
   }
 
-  // Connect to MongoDB and set up scheduler
-  let dbConnected = false;
-  let dbError: Error | undefined;
-  let schedulerConnected = false;
-  let schedulerError: Error | undefined;
+    // Setup cache manager
+    let inMemoryCacheSetup = false;
+    let inMemoryCacheError: Error | undefined;
+    await setupInMemoryCache()
+        .then(() => {
+            inMemoryCacheSetup = true;
+        })
+        .catch((error) => {
+            inMemoryCacheError = error;
+            Logger.error(error);
+        });
+
+    // Connect to MongoDB and set up scheduler
+    let dbConnected = false;
+    let dbError: Error | undefined;
+    let schedulerConnected = false;
+    let schedulerError: Error | undefined;
 
   if (process.env.MONGODB_URL) {
     await connect(process.env.MONGODB_URL)
@@ -130,10 +156,15 @@ export default event(Events.ClientReady, async ({ log }, client) => {
       logMessage += ` - DB Error: ${dbError.message}`;
     }
 
-    logMessage += ` - Scheduler State: ${schedulerConnected ? 'Connected' : 'Disconnected'}`;
-    if (!schedulerConnected && schedulerError) {
-      logMessage += ` - Scheduler Error: ${schedulerError.message}`;
-    }
+        logMessage += ` - Scheduler State: ${schedulerConnected ? 'Connected' : 'Disconnected'}`;
+        if (!schedulerConnected && schedulerError) {
+            logMessage += ` - Scheduler Error: ${schedulerError.message}`;
+        }
+
+        logMessage += ` - Cache State: ${inMemoryCacheSetup ? 'Setup' : 'Not Setup'}`;
+        if (!inMemoryCacheSetup && inMemoryCacheError) {
+            logMessage += ` - Cache Error: ${inMemoryCacheError.message}`;
+        }
 
     await botDevChannel.send({ content: logMessage });
   } else {
