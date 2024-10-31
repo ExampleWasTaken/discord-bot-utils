@@ -122,7 +122,7 @@ export async function handleShowPrefixCommandPermissions(interaction: ChatInputC
       ephemeral: false,
     });
   } catch (error) {
-    Logger.error(`Failed to show prefix command content for command ${command}: ${error}`);
+    Logger.error(`Failed to show prefix command content for command ${command}:`, error);
     await interaction.followUp({ embeds: [failedEmbed(command)], ephemeral: true });
   }
 }

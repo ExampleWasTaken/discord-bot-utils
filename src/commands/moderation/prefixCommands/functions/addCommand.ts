@@ -202,11 +202,11 @@ export async function handleAddPrefixCommand(interaction: ChatInputCommandIntera
           embeds: [modLogEmbed(moderator, name, aliases, description, isEmbed, embedColor, prefixCommand.id)],
         });
       } catch (error) {
-        Logger.error(`Failed to post a message to the mod logs channel: ${error}`);
+        Logger.error('Failed to post a message to the mod logs channel:', error);
       }
     }
   } catch (error) {
-    Logger.error(`Failed to add a prefix command ${name}: ${error}`);
+    Logger.error(`Failed to add a prefix command ${name}:`, error);
     await interaction.followUp({ embeds: [failedEmbed(name)], ephemeral: true });
   }
 }
