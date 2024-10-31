@@ -10,6 +10,10 @@ import {
   event,
   getScheduler,
   imageBaseUrl,
+  loadAllPrefixCommandCategoriesToCache,
+  loadAllPrefixCommandChannelDefaultVersionsToCache,
+  loadAllPrefixCommandVersionsToCache,
+  loadAllPrefixCommandsToCache,
   setupInMemoryCache,
   setupScheduler,
 } from '../lib';
@@ -138,6 +142,77 @@ export default event(Events.ClientReady, async ({ log }, client) => {
         }
       }
     }
+  }
+
+  const cacheRefreshInterval = process.env.CACHE_REFRESH_INTERVAL ? Number(process.env.CACHE_REFRESH_INTERVAL) : 1800;
+  // Set in memory cache refresh handler
+  if (schedulerConnected && cacheRefreshInterval) {
+    const scheduler = getScheduler();
+    if (scheduler) {
+      const cacheJobList = await scheduler.jobs({ name: 'refreshInMemoryCache' });
+      if (cacheJobList.length === 0) {
+        await scheduler.every(`${cacheRefreshInterval} seconds`, 'refreshInMemoryCache', {
+          interval: cacheRefreshInterval,
+        });
+        Logger.info(`Cache refresh job scheduled with interval ${cacheRefreshInterval}`);
+      } else {
+        const cacheJob = cacheJobList[0];
+        const { interval } = cacheJob.attrs.data as { interval: number };
+        if (interval !== cacheRefreshInterval) {
+          await scheduler.cancel({ name: 'refreshInMemoryCache' });
+          await scheduler.every(`${cacheRefreshInterval} seconds`, 'refreshInMemoryCache', {
+            interval: cacheRefreshInterval,
+          });
+          Logger.info(`Cache refresh job rescheduled with new interval ${cacheRefreshInterval}`);
+        } else {
+          Logger.info('Cache refresh job already scheduled');
+        }
+      }
+    }
+  }
+
+  // Loading in-memory cache with prefix commands
+  if (inMemoryCacheSetup && dbConnected) {
+    loadAllPrefixCommandsToCache()
+      .then(() => {
+        Logger.info('Loaded prefix commands to cache.');
+      })
+      .catch((error) => {
+        Logger.error(`Failed to load prefix commands to cache: ${error}`);
+      });
+  }
+
+  // Loading in-memory cache with prefix command versions
+  if (inMemoryCacheSetup && dbConnected) {
+    await loadAllPrefixCommandVersionsToCache()
+      .then(() => {
+        Logger.info('Loaded prefix command versions to cache.');
+      })
+      .catch((error) => {
+        Logger.error(`Failed to load prefix command versions to cache: ${error}`);
+      });
+  }
+
+  // Loading in-memory cache with prefix command categories
+  if (inMemoryCacheSetup && dbConnected) {
+    await loadAllPrefixCommandCategoriesToCache()
+      .then(() => {
+        Logger.info('Loaded prefix command categories to cache.');
+      })
+      .catch((error) => {
+        Logger.error(`Failed to load prefix command categories to cache: ${error}`);
+      });
+  }
+
+  // Loading in-memory cache with prefix command channel default versions
+  if (inMemoryCacheSetup && dbConnected) {
+    await loadAllPrefixCommandChannelDefaultVersionsToCache()
+      .then(() => {
+        Logger.info('Loaded prefix command channel default versions to cache.');
+      })
+      .catch((error) => {
+        Logger.error(`Failed to load prefix command channel default versions to cache: ${error}`);
+      });
   }
 
   // Send bot status message to bot-dev channel
