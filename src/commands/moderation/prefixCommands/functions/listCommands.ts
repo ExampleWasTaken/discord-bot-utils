@@ -53,7 +53,7 @@ export async function handleListPrefixCommands(interaction: ChatInputCommandInte
     try {
       await interaction.followUp({ embeds: [successEmbed(searchText, embedFields)], ephemeral: false });
     } catch (error) {
-      Logger.error(`Failed to list prefix command commands with search ${searchText}: ${error}`);
+      Logger.error(`Failed to list prefix command commands with search ${searchText}:`, error);
       await interaction.followUp({ embeds: [failedEmbed(searchText)], ephemeral: true });
     }
   } else {

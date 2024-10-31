@@ -81,7 +81,10 @@ export async function handleShowPrefixCommandChannelDefaultVersion(interaction: 
       ephemeral: false,
     });
   } catch (error) {
-    Logger.error(`Failed to show the channel default version for channel ${channel} and version ${version}: ${error}`);
+    Logger.error(
+      `Failed to show the channel default version for channel ${channel.toString()} and version ${version}`,
+      error,
+    );
     await interaction.followUp({ embeds: [failedEmbed(channelName)], ephemeral: true });
   }
 }

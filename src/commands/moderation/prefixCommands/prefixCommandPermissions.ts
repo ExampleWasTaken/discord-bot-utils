@@ -184,7 +184,7 @@ const autocompleteCallback: AutocompleteCallback = async ({ interaction }) => {
   const conn = getConn();
 
   switch (optionName) {
-    case 'command':
+    case 'command': {
       if (!conn) {
         return interaction.respond(choices);
       }
@@ -197,6 +197,7 @@ const autocompleteCallback: AutocompleteCallback = async ({ interaction }) => {
         choices.push({ name, value: name });
       }
       break;
+    }
     default:
       choices = [];
   }

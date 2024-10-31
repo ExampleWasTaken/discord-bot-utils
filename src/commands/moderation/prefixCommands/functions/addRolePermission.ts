@@ -55,7 +55,7 @@ const modLogEmbed = (moderator: User, command: string, roleName: string) =>
       },
       {
         name: 'Moderator',
-        value: `${moderator}`,
+        value: `${moderator.toString()}`,
       },
     ],
     color: Colors.Green,
@@ -112,11 +112,11 @@ export async function handleAddPrefixCommandRolePermission(interaction: ChatInpu
         try {
           await modLogsChannel.send({ embeds: [modLogEmbed(moderator, command, roleName)] });
         } catch (error) {
-          Logger.error(`Failed to post a message to the mod logs role: ${error}`);
+          Logger.error('Failed to post a message to the mod logs role:', error);
         }
       }
     } catch (error) {
-      Logger.error(`Failed to add prefix command role ${roleName} for command ${command}: ${error}`);
+      Logger.error(`Failed to add prefix command role ${roleName} for command ${command}:`, error);
       await interaction.followUp({ embeds: [failedEmbed(command, roleName)], ephemeral: true });
     }
   } else {

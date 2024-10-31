@@ -44,7 +44,7 @@ const modLogEmbed = (moderator: User, channel: string) =>
       },
       {
         name: 'Moderator',
-        value: `${moderator}`,
+        value: `${moderator.toString()}`,
       },
     ],
     color: Colors.Red,
@@ -89,11 +89,11 @@ export async function handleDeletePrefixCommandChannelDefaultVersion(
         try {
           await modLogsChannel.send({ embeds: [modLogEmbed(moderator, channelName)] });
         } catch (error) {
-          Logger.error(`Failed to post a message to the mod logs channel: ${error}`);
+          Logger.error('Failed to post a message to the mod logs channel:', error);
         }
       }
     } catch (error) {
-      Logger.error(`Failed to unset a default channel version for channel ${channelName}: ${error}`);
+      Logger.error(`Failed to unset a default channel version for channel ${channelName}:`, error);
       await interaction.followUp({ embeds: [failedEmbed(channelName)], ephemeral: true });
     }
   } else {

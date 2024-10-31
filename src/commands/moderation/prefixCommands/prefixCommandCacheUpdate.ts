@@ -36,7 +36,7 @@ const noChannelEmbed = (channelName: string) =>
 const cacheUpdateEmbedField = (moderator: User, duration: string): EmbedField[] => [
   {
     name: 'Moderator',
-    value: `${moderator}`,
+    value: `${moderator.toString()}`,
     inline: true,
   },
   {
@@ -59,7 +59,9 @@ export default slashCommand(data, async ({ interaction }) => {
       refreshAllPrefixCommandChannelDefaultVersionsCache(),
     ]);
   } catch (error) {
-    await interaction.editReply({ content: `An error occurred while updating the cache: ${error}` });
+    await interaction.editReply({
+      content: `An error occurred while updating the cache${error instanceof Error && `: ${error}`}`,
+    });
     return;
   }
 
@@ -73,7 +75,7 @@ export default slashCommand(data, async ({ interaction }) => {
     await modLogsChannel.send({
       embeds: [cacheUpdateEmbed(cacheUpdateEmbedField(interaction.user, duration), Colors.Green)],
     });
-  } catch (error) {
+  } catch {
     await interaction.followUp({ embeds: [noChannelEmbed('mod-log')] });
   }
 });

@@ -82,7 +82,7 @@ const modLogEmbed = (
       },
       {
         name: 'Moderator',
-        value: `${moderator}`,
+        value: `${moderator.toString()}`,
       },
     ],
     color: Colors.Red,
@@ -158,11 +158,11 @@ export async function handleDeletePrefixCommandContent(interaction: ChatInputCom
             embeds: [modLogEmbed(moderator, `${commandName}`, `${versionName}`, `${title}`, `${content}`, `${image}`)],
           });
         } catch (error) {
-          Logger.error(`Failed to post a message to the mod logs channel: ${error}`);
+          Logger.error('Failed to post a message to the mod logs channel:', error);
         }
       }
     } catch (error) {
-      Logger.error(`Failed to delete a prefix command content with version ${version}: ${error}`);
+      Logger.error(`Failed to delete a prefix command content with version ${version}:`, error);
       await interaction.followUp({ embeds: [failedEmbed(version)], ephemeral: true });
     }
   } else {

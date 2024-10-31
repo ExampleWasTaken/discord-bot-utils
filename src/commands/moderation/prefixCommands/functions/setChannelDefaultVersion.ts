@@ -49,7 +49,7 @@ const modLogEmbed = (moderator: User, channel: string, version: string, emoji: s
       },
       {
         name: 'Moderator',
-        value: `${moderator}`,
+        value: `${moderator.toString()}`,
       },
     ],
     color: Colors.Green,
@@ -109,13 +109,11 @@ export async function handleSetPrefixCommandChannelDefaultVersion(interaction: C
         try {
           await modLogsChannel.send({ embeds: [modLogEmbed(moderator, channelName, version, emoji)] });
         } catch (error) {
-          Logger.error(`Failed to post a message to the mod logs channel: ${error}`);
+          Logger.error(`Failed to post a message to the mod logs channel:`, error);
         }
       }
     } catch (error) {
-      Logger.error(
-        `Failed to set the default channel version for channel ${channelName} to version ${version}: ${error}`,
-      );
+      Logger.error(`Failed to set the default channel version for channel ${channelName} to version ${version}`, error);
       await interaction.followUp({ embeds: [failedEmbed(channelName)], ephemeral: true });
     }
   } else {

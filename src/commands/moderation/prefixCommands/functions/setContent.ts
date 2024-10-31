@@ -87,7 +87,7 @@ const modLogEmbed = (
       },
       {
         name: 'Moderator',
-        value: `${moderator}`,
+        value: `${moderator.toString()}`,
       },
     ],
     footer: { text: `Command ID: ${commandId} - Version ID: ${versionId}` },
@@ -232,7 +232,9 @@ export async function handleSetPrefixCommandContent(interaction: ChatInputComman
     try {
       await foundData?.deleteOne();
     } catch (error) {
-      Logger.error(`Failed to delete existing content for prefix command ${command} and version ${version}: ${error}`);
+      Logger.error(
+        `Failed to delete existing content for prefix command ${command} and version ${version}${error instanceof Error && `: ${error}`} `,
+      );
       await interaction.followUp({ embeds: [failedEmbed(command, version)], ephemeral: true });
       return;
     }
@@ -255,11 +257,11 @@ export async function handleSetPrefixCommandContent(interaction: ChatInputComman
           embeds: [modLogEmbed(moderator, command, version, title, content, image, commandId, versionId)],
         });
       } catch (error) {
-        Logger.error(`Failed to post a message to the mod logs channel: ${error}`);
+        Logger.error('Failed to post a message to the mod logs channel:', error);
       }
     }
   } catch (error) {
-    Logger.error(`Failed to set prefix command content for command ${command} and version ${version}: ${error}`);
+    Logger.error(`Failed to set prefix command content for command ${command} and version ${version}`, error);
     await interaction.followUp({ embeds: [failedEmbed(command, version)], ephemeral: true });
   }
 }

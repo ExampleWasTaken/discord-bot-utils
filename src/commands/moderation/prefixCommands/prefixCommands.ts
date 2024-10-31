@@ -532,7 +532,7 @@ const autocompleteCallback: AutocompleteCallback = async ({ interaction }) => {
   const conn = getConn();
 
   switch (optionName) {
-    case 'category':
+    case 'category': {
       if (!conn) {
         return interaction.respond(choices);
       }
@@ -545,7 +545,8 @@ const autocompleteCallback: AutocompleteCallback = async ({ interaction }) => {
         choices.push({ name, value: name });
       }
       break;
-    case 'command':
+    }
+    case 'command': {
       if (!conn) {
         return interaction.respond(choices);
       }
@@ -558,7 +559,8 @@ const autocompleteCallback: AutocompleteCallback = async ({ interaction }) => {
         choices.push({ name, value: name });
       }
       break;
-    case 'version':
+    }
+    case 'version': {
       choices.push({ name: 'GENERIC', value: 'GENERIC' });
       if (!conn) {
         return interaction.respond(choices);
@@ -572,6 +574,7 @@ const autocompleteCallback: AutocompleteCallback = async ({ interaction }) => {
         choices.push({ name, value: name });
       }
       break;
+    }
     default:
       break;
   }

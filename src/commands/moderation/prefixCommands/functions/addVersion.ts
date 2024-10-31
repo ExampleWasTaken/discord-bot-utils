@@ -59,7 +59,7 @@ const modLogEmbed = (
       },
       {
         name: 'Moderator',
-        value: `${moderator}`,
+        value: `${moderator.toString()}`,
       },
       {
         name: 'Emoji',
@@ -154,11 +154,11 @@ export async function handleAddPrefixCommandVersion(interaction: ChatInputComman
           embeds: [modLogEmbed(moderator, name, emoji, alias, enabled, prefixCommandVersion.id)],
         });
       } catch (error) {
-        Logger.error(`Failed to post a message to the mod logs channel: ${error}`);
+        Logger.error('Failed to post a message to the mod logs channel:', error);
       }
     }
   } catch (error) {
-    Logger.error(`Failed to add a prefix command category ${name}: ${error}`);
+    Logger.error(`Failed to add a prefix command category ${name}:`, error);
     await interaction.followUp({ embeds: [failedEmbed(name)], ephemeral: true });
   }
 }

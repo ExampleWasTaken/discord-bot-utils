@@ -23,7 +23,6 @@ export async function refreshInMemoryCache(job: Job) {
   }
 
   // Needed because of https://github.com/agenda/agenda/issues/401
-  // eslint-disable-next-line no-underscore-dangle
   const matchingJobs = await scheduler.jobs({ _id: job.attrs._id });
   if (matchingJobs.length !== 1) {
     Logger.debug('Job has been deleted already, skipping execution.');

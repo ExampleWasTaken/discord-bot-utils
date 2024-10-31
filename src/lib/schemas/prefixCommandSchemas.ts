@@ -17,7 +17,7 @@ const prefixCommandCategorySchema = new Schema<IPrefixCommandCategory>({
 });
 
 export interface IPrefixCommandVersion extends Document {
-  versionId: mongoose.Schema.Types.ObjectId;
+  versionId: { type: mongoose.Schema.Types.ObjectId; ref: 'PrefixCommandVersion' };
   name: string;
   emoji: string;
   alias: string;

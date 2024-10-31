@@ -66,7 +66,7 @@ const modLogEmbed = (
       },
       {
         name: 'Moderator',
-        value: `${moderator}`,
+        value: `${moderator.toString()}`,
       },
       {
         name: 'Emoji',
@@ -182,11 +182,11 @@ export async function handleModifyPrefixCommandVersion(interaction: ChatInputCom
             embeds: [modLogEmbed(moderator, name, emoji, alias, enabled || false, versionId)],
           });
         } catch (error) {
-          Logger.error(`Failed to post a message to the mod logs channel: ${error}`);
+          Logger.error(`Failed to post a message to the mod logs channel:`, error);
         }
       }
     } catch (error) {
-      Logger.error(`Failed to modify a prefix command version with id ${versionId}: ${error}`);
+      Logger.error(`Failed to modify a prefix command version with id ${versionId}:`, error);
       await interaction.followUp({ embeds: [failedEmbed(versionId)], ephemeral: true });
     }
   } else {

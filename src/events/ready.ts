@@ -1,23 +1,19 @@
 import { ActivityType, TextChannel } from 'discord.js';
 import moment from 'moment';
-import {
-  constantsConfig,
-  event,
-  Events,
-  connect,
-  setupScheduler,
-  Logger,
-  imageBaseUrl,
-  getScheduler,
-  setupInMemoryCache,
-  loadAllPrefixCommandsToCache,
-  loadAllPrefixCommandVersionsToCache,
-  loadAllPrefixCommandCategoriesToCache,
-  loadAllPrefixCommandChannelDefaultVersionsToCache,
-} from '../lib';
-import { deployCommands } from '../scripts/deployCommands';
 import commandArray from '../commands';
 import contextArray from '../commands/context';
+import {
+  Events,
+  Logger,
+  connect,
+  constantsConfig,
+  event,
+  getScheduler,
+  imageBaseUrl,
+  setupInMemoryCache,
+  setupScheduler,
+} from '../lib';
+import { deployCommands } from '../scripts/deployCommands';
 
 export default event(Events.ClientReady, async ({ log }, client) => {
   log(`Logged in as ${client.user.username}!`);
@@ -63,7 +59,7 @@ export default event(Events.ClientReady, async ({ log }, client) => {
       inMemoryCacheSetup = true;
     })
     .catch((error) => {
-      inMemoryCacheError = error;
+      inMemoryCacheError = error instanceof Error ? error : undefined;
       Logger.error(error);
     });
 

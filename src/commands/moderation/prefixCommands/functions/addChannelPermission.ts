@@ -55,7 +55,7 @@ const modLogEmbed = (moderator: User, command: string, channel: string) =>
       },
       {
         name: 'Moderator',
-        value: `${moderator}`,
+        value: `${moderator.toString()}`,
       },
     ],
     color: Colors.Green,
@@ -112,11 +112,11 @@ export async function handleAddPrefixCommandChannelPermission(interaction: ChatI
         try {
           await modLogsChannel.send({ embeds: [modLogEmbed(moderator, command, channelId)] });
         } catch (error) {
-          Logger.error(`Failed to post a message to the mod logs channel: ${error}`);
+          Logger.error('Failed to post a message to the mod logs channel:', error);
         }
       }
     } catch (error) {
-      Logger.error(`Failed to add prefix command channel <#${channel}> for command ${command}: ${error}`);
+      Logger.error(`Failed to add prefix command channel <#${channel.id}> for command ${command}:`, error);
       await interaction.followUp({ embeds: [failedEmbed(command, channelId)], ephemeral: true });
     }
   } else {

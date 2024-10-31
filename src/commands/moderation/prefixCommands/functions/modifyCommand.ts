@@ -75,7 +75,7 @@ const modLogEmbed = (
       },
       {
         name: 'Moderator',
-        value: `${moderator}`,
+        value: `${moderator.toString()}`,
       },
       {
         name: 'Aliases',
@@ -237,11 +237,11 @@ export async function handleModifyPrefixCommand(interaction: ChatInputCommandInt
             ],
           });
         } catch (error) {
-          Logger.error(`Failed to post a message to the mod logs channel: ${error}`);
+          Logger.error(`Failed to post a message to the mod logs channel:`, error);
         }
       }
     } catch (error) {
-      Logger.error(`Failed to modify a prefix command command with id ${commandId}: ${error}`);
+      Logger.error(`Failed to modify a prefix command command with id ${commandId}:`, error);
       await interaction.followUp({ embeds: [failedEmbed(commandId)], ephemeral: true });
     }
   } else {

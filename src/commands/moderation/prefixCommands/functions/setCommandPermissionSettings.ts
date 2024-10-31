@@ -68,7 +68,7 @@ const modLogEmbed = (
       },
       {
         name: 'Moderator',
-        value: `${moderator}`,
+        value: `${moderator.toString()}`,
       },
     ],
     color: Colors.Green,
@@ -131,11 +131,11 @@ export async function handleSetPrefixCommandPermissionSettings(interaction: Chat
             embeds: [modLogEmbed(moderator, command, rolesBlocklist, channelsBlocklist, quietErrors, verboseErrors)],
           });
         } catch (error) {
-          Logger.error(`Failed to post a message to the mod logs channel: ${error}`);
+          Logger.error('Failed to post a message to the mod logs channel:', error);
         }
       }
     } catch (error) {
-      Logger.error(`Failed to set the permission settings for command ${command}: ${error}`);
+      Logger.error(`Failed to set the permission settings for command ${command}:`, error);
       await interaction.followUp({ embeds: [failedEmbed(command)], ephemeral: true });
     }
   } else {
