@@ -31,6 +31,8 @@
     "1163130801131634868",
     "1021464464928809022"
   ],
+  "prefixCommandPrefix": ".",
+  "prefixCommandPermissionDelay": 10000,
   "roleAssignmentIds": [
     {
       "group": "interestedIn",
@@ -55,6 +57,10 @@
         {
           "id": "SERVER_ANNOUNCEMENTS",
           "label": "Server Announcements"
+        },
+        {
+          "id": "AIRCRAFT_RELEASES",
+          "label": "Aircraft Releases"
         },
         {
           "id": "PROGRESS_ANNOUNCEMENT",
@@ -89,6 +95,7 @@
     ]
   },
   "roles": {
+    "AIRCRAFT_RELEASES": "1301308639453384704",
     "ADMIN_TEAM": "1162821800225419272",
     "BOT_DEVELOPER": "1162822853306101901",
     "COMMUNITY_SUPPORT": "1162822911745347594",
