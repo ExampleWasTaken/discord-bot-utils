@@ -2,6 +2,7 @@
 
 Update <small>_ October 2024</small>
 
+- feat: Update welcome message for A380X release (1/11/2024)
 - fix: Changing A32NX Releases to Aircraft Releases in Role assignment (30/10/2024)
 - fix: Bugs with permissions causing crash during startup or prefix command handling (30/10/2024)
 - feat: Prefix Command Management (28/10/2024)
