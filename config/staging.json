@@ -31,6 +31,8 @@
     "1163130801131634868",
     "1021464464928809022"
   ],
+  "prefixCommandPrefix": ".",
+  "prefixCommandPermissionDelay": 10000,
   "roleAssignmentIds": [
     {
       "group": "interestedIn",
@@ -53,8 +55,12 @@
       "group": "mediaAnnouncements",
       "roles": [
         {
-          "id": "SERVER_ANNOUNCEMENT",
+          "id": "SERVER_ANNOUNCEMENTS",
           "label": "Server Announcements"
+        },
+        {
+          "id": "AIRCRAFT_RELEASES",
+          "label": "Aircraft Releases"
         },
         {
           "id": "PROGRESS_ANNOUNCEMENT",
@@ -89,6 +95,7 @@
     ]
   },
   "roles": {
+    "AIRCRAFT_RELEASES": "1301308639453384704",
     "ADMIN_TEAM": "1162821800225419272",
     "BOT_DEVELOPER": "1162822853306101901",
     "COMMUNITY_SUPPORT": "1162822911745347594",
@@ -98,7 +105,7 @@
     "MEDIA_TEAM": "1162822767079588000",
     "MODERATION_TEAM": "1162821885202006188",
     "PROGRESS_ANNOUNCEMENT": "1162823072089387150",
-    "SERVER_ANNOUNCEMENT": "1162823032092495892",
+    "SERVER_ANNOUNCEMENTS": "1162823032092495892",
     "TESTER": "1162822140391850006"
   },
   "threads": {

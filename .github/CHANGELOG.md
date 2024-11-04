@@ -1,8 +1,16 @@
 ## Changelog
 
-Update <small>_ September 2024</small>
 
-- fix: TS v5.5 breaks build (09/09/2024)
+Update <small>_ November 2024</small>
+
+- fix: TS v5.5 breaks build (04/11/2024)
+
+Update <small>_ October 2024</small>
+
+- fix: Changing A32NX Releases to Aircraft Releases in Role assignment (30/10/2024)
+- fix: Bugs with permissions causing crash during startup or prefix command handling (30/10/2024)
+- feat: Prefix Command Management (28/10/2024)
+- fix: role assignment typo for server announcements (22/10/2024)
 
 Update <small>_ August 2024</small>
 

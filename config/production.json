@@ -30,6 +30,8 @@
     "1163130801131634868",
     "1021464464928809022"
   ],
+  "prefixCommandPrefix": ".",
+  "prefixCommandPermissionDelay": 10000,
   "roleAssignmentIds": [
     {
       "group": "interestedIn",
@@ -48,12 +50,12 @@
       "group": "mediaAnnouncements",
       "roles": [
         {
-          "id": "SERVER_ANNOUNCEMENT",
+          "id": "SERVER_ANNOUNCEMENTS",
           "label": "Server Announcements"
         },
         {
-          "id": "A32NX_RELEASES",
-          "label": "A32NX Releases"
+          "id": "AIRCRAFT_RELEASES",
+          "label": "Aircraft Releases"
         },
         {
           "id": "PROGRESS",
@@ -92,7 +94,7 @@
     ]
   },
   "roles": {
-    "A32NX_RELEASES": "748938423045193728",
+    "AIRCRAFT_RELEASES": "748938423045193728",
     "ADMIN_TEAM": "738864824305319936",
     "BOT_DEVELOPER": "768888763929591818",
     "COMMUNITY_SUPPORT": "870394933926830100",
