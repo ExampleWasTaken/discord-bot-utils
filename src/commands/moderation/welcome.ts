@@ -19,9 +19,9 @@ const WELCOME_EMBED = makeEmbed({
     description: makeLines([
         'Welcome to the **Official Discord Server** of **FlyByWire Simulations!**',
         '',
-        'The FlyByWire Simulations is a community-driven open source project to create a free Airbus A320neo and Airbus A380 in Microsoft Flight Simulator that are as close to reality as possible. It started out as an enhancement project to the default A320neo and is now proceeding as an independent add-on project aiming to bring both aircraft up to payware-level systems depth and functionality, all for free.',
+        'FlyByWire Simulations is a community-driven, open-source project aimed at creating realistic Airbus A320neo and Airbus A380 aircraft for Microsoft Flight Simulator. Originally launched as an enhancement project for the default A320neo, it has evolved into an independent add-on project that strives to bring both aircraft to a payware-level standard in terms of systems depth and functionality - all for free',
         '',
-        `Feel free to download, test, and share your feedback, or if you are interested in developing, assign your <#${constantsConfig.channels.ROLES}>, and get cracking!`,
+        `Feel free to download, test, and share your feedback. If you are interested in developing, assign your <#${constantsConfig.channels.ROLES}>, and get cracking!`,
     ]),
 
 });
