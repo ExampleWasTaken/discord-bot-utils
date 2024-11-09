@@ -1,5 +1,6 @@
 ## Changelog
 
+
 Update <small>_ November 2024</small>
 
 - feat: Update welcome message for A380X release (09/11/2024)
