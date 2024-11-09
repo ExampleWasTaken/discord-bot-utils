@@ -3,6 +3,7 @@
 
 Update <small>_ November 2024</small>
 
+- feat: Update welcome message for A380X release (09/11/2024)
 - fix: TS v5.5 breaks build (09/11/2024)
 
 Update <small>_ October 2024</small>
