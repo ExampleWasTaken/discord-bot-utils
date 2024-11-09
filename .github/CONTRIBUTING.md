@@ -12,7 +12,7 @@ Please help other contributors to the project wherever you can, as people all st
 
 ## Prerequisites
 
-- [node](https://nodejs.org/) version >= 18.x
+- [node](https://nodejs.org/) version >= 22.x
 
 ## Ground Rules
 
@@ -61,7 +61,7 @@ This library will load a file from the `config` folder, based on an environment 
 
 ### Setting up the config
 
-1. Create a file named `development.json` at [../config/](../config/).
+1. Create a file named `development.json` at [../config/](../config).
 2. Paste the contents of [../config/staging.json](../config/staging.json) into `development.json`.
 3. In your `.env` file set `NODE_CONFIG_ENV` to `development`.
 4. In your `development.json` file replace the `guildId` field with your server ID.
