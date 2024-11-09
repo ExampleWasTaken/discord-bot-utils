@@ -1,5 +1,10 @@
 ## Changelog
 
+
+Update <small>_ November 2024</small>
+
+- fix: TS v5.5 breaks build (09/11/2024)
+
 Update <small>_ October 2024</small>
 
 - fix: Changing A32NX Releases to Aircraft Releases in Role assignment (30/10/2024)
